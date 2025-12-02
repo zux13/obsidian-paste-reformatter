@@ -185,7 +185,13 @@ export function transformMarkdown(
                 filteredLines.push(currentLine);
                 continue;
             }
-            
+
+            // Rule 4: Keep empty line if it comes right after a heading
+            if (isCurrentLineEmpty && i > 0 && /^#{1,6}\s/.test(lines[i - 1])) {
+                filteredLines.push(currentLine);
+                continue;
+            }
+
             // Default: Remove empty lines unless they meet the above criteria
             if (!isCurrentLineEmpty) {
                 filteredLines.push(currentLine);
